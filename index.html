@@ -130,11 +130,171 @@
             transition: all 0.3s;
             animation: fadeInUp 0.8s 0.4s backwards;
             box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            border: none;
         }
         
         .cta-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            animation: fadeIn 0.3s;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 0;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 10px 50px rgba(0,0,0,0.3);
+            animation: slideDown 0.3s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        @keyframes slideDown {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .modal-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 20px 20px 0 0;
+            position: relative;
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .modal-header h2 span {
+            color: #FFD700;
+        }
+        
+        .close {
+            color: white;
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        .close:hover {
+            color: #FFD700;
+        }
+        
+        .modal-body {
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a1a2e;
+            font-weight: 600;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #FFD700;
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #FFD700;
+            color: #1a1a2e;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message {
+            display: none;
+            background: #4CAF50;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+        
+        .error-message {
+            display: none;
+            background: #f44336;
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            text-align: center;
         }
         
         /* Services Section */
@@ -310,6 +470,11 @@
             nav ul {
                 gap: 1rem;
             }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
         }
     </style>
 </head>
@@ -334,8 +499,70 @@
         <h1>⚡ <span>SAMAKOURAN</span></h1>
         <p>Votre énergie, notre métier</p>
         <p>Solutions électriques professionnelles pour particuliers et entreprises</p>
-        <a href="#contact" class="cta-button">Demander un devis gratuit</a>
+        <button class="cta-button" onclick="openModal()">Demander un devis gratuit</button>
     </section>
+
+    <!-- Modal Formulaire -->
+    <div id="devisModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Demande de <span>Devis Gratuit</span></h2>
+            </div>
+            <div class="modal-body">
+                <div id="successMessage" class="success-message">
+                    ✓ Votre demande a été envoyée avec succès ! Nous vous contacterons bientôt.
+                </div>
+                <div id="errorMessage" class="error-message">
+                    ✗ Une erreur s'est produite. Veuillez réessayer.
+                </div>
+                <form id="devisForm" onsubmit="submitForm(event)">
+                    <div class="form-group">
+                        <label for="nom">Nom complet *</label>
+                        <input type="text" id="nom" name="nom" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="telephone">Téléphone *</label>
+                        <input type="tel" id="telephone" name="telephone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="adresse">Adresse</label>
+                        <input type="text" id="adresse" name="adresse">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="service">Type de service *</label>
+                        <select id="service" name="service" required>
+                            <option value="">Sélectionnez un service</option>
+                            <option value="installation-residentielle">Installation résidentielle</option>
+                            <option value="solutions-entreprises">Solutions entreprises</option>
+                            <option value="maintenance-depannage">Maintenance & Dépannage</option>
+                            <option value="energie-solaire">Énergie solaire</option>
+                            <option value="eclairage-led">Éclairage LED</option>
+                            <option value="mise-aux-normes">Mise aux normes</option>
+                            <option value="etude-realisation">Étude et Réalisation</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Décrivez votre projet *</label>
+                        <textarea id="message" name="message" required placeholder="Donnez-nous plus de détails sur votre projet..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        Envoyer ma demande ⚡
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Services Section -->
     <section class="services" id="services">
@@ -409,7 +636,7 @@
         <div class="container">
             <h2>Contactez-<span>nous</span></h2>
             <p>Besoin d'un électricien professionnel ? Nous sommes là pour vous !</p>
-            <a href="#" class="cta-button">Demander un devis</a>
+            <button class="cta-button" onclick="openModal()">Demander un devis</button>
             <div class="contact-info">
                 <div class="contact-item">
                     <span>📞</span>
@@ -424,7 +651,7 @@
                 <div class="contact-item">
                     <span>📍</span>
                     <strong>Adresse</strong>
-                    <p>Guediawaye,Dakar, Sénégal</p>
+                    <p>Guediawaye, Dakar, Sénégal</p>
                 </div>
             </div>
         </div>
@@ -434,5 +661,75 @@
     <footer>
         <p>&copy; 2024 <span>SamaKouran</span> - Tous droits réservés | Votre énergie, notre métier</p>
     </footer>
+
+    <script>
+        function openModal() {
+            document.getElementById('devisModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            document.getElementById('devisModal').style.display = 'none';
+            document.body.style.overflow = 'auto';
+            document.getElementById('successMessage').style.display = 'none';
+            document.getElementById('errorMessage').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById('devisModal');
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        async function submitForm(event) {
+            event.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const form = document.getElementById('devisForm');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+            
+            const formData = {
+                nom: document.getElementById('nom').value,
+                telephone: document.getElementById('telephone').value,
+                email: document.getElementById('email').value,
+                adresse: document.getElementById('adresse').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value
+            };
+            
+            const emailBody = `
+Nouvelle demande de devis - SamaKouran
+
+Nom: ${formData.nom}
+Téléphone: ${formData.telephone}
+Email: ${formData.email}
+Adresse: ${formData.adresse}
+Service demandé: ${formData.service}
+
+Message:
+${formData.message}
+            `;
+            
+            const mailtoLink = `mailto:electricienfallou@gmail.com?subject=Demande de devis - ${formData.nom}&body=${encodeURIComponent(emailBody)}`;
+            
+            window.location.href = mailtoLink;
+            
+            setTimeout(() => {
+                successMsg.style.display = 'block';
+                form.reset();
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Envoyer ma demande ⚡';
+                
+                setTimeout(() => {
+                    closeModal();
+                }, 3000);
+            }, 1000);
+        }
+    </script>
 </body>
 </html>
