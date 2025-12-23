@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SamaKouran - Votre énergie, notre métier</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .logo span {
+            color: #FFD700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav a:hover {
+            color: #FFD700;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 150px 2rem 100px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '⚡';
+            position: absolute;
+            font-size: 15rem;
+            opacity: 0.05;
+            top: -50px;
+            right: -50px;
+            animation: pulse 3s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.05; }
+            50% { transform: scale(1.1); opacity: 0.08; }
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 0.8s;
+        }
+        
+        .hero h1 span {
+            color: #FFD700;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 0.8s 0.2s backwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: #FFD700;
+            color: #1a1a2e;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            animation: fadeInUp 0.8s 0.4s backwards;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 80px 2rem;
+            background: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #1a1a2e;
+        }
+        
+        .section-title span {
+            color: #FFD700;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .service-card h3 {
+            color: #1a1a2e;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 2rem;
+            background: white;
+        }
+        
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+        
+        .about-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+        
+        .about-text h2 span {
+            color: #FFD700;
+        }
+        
+        .about-features {
+            list-style: none;
+            margin-top: 2rem;
+        }
+        
+        .about-features li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .about-features li::before {
+            content: '⚡';
+            color: #FFD700;
+            margin-right: 1rem;
+        }
+        
+        .about-image {
+            text-align: center;
+            font-size: 12rem;
+            color: #FFD700;
+            opacity: 0.8;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 80px 2rem;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .contact h2 span {
+            color: #FFD700;
+        }
+        
+        .contact p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .contact-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-item span {
+            font-size: 2rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #0f0f1e;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        footer span {
+            color: #FFD700;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .about-image {
+                font-size: 6rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">
+                <span>⚡</span> SAMAKOURAN
+            </div>
+            <ul>
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="accueil">
+        <h1>⚡ <span>SAMAKOURAN</span></h1>
+        <p>Votre énergie, notre métier</p>
+        <p>Solutions électriques professionnelles pour particuliers et entreprises</p>
+        <a href="#contact" class="cta-button">Demander un devis gratuit</a>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Nos <span>Services</span></h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">🏠</div>
+                    <h3>Installation résidentielle</h3>
+                    <p>Installation électrique complète pour votre maison, aux normes et sécurisée.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🏢</div>
+                    <h3>Solutions entreprises</h3>
+                    <p>Installations électriques industrielles et commerciales adaptées à vos besoins.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🔧</div>
+                    <h3>Maintenance & Dépannage</h3>
+                    <p>Service de dépannage rapide disponible 24/7 pour toute urgence électrique.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">☀️</div>
+                    <h3>Énergie solaire</h3>
+                    <p>Installation de panneaux solaires pour une énergie propre et économique.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">💡</div>
+                    <h3>Éclairage LED</h3>
+                    <p>Solutions d'éclairage modernes et économes en énergie.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛡️</div>
+                    <h3>Mise aux normes</h3>
+                    <p>Diagnostic et mise en conformité de vos installations électriques.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">📐</div>
+                    <h3>Étude et Réalisation</h3>
+                    <p>Conception sur-mesure et réalisation de projets électriques de A à Z.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="apropos">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2>Pourquoi choisir <span>SamaKouran</span> ?</h2>
+                    <p>Nous sommes une équipe d'électriciens qualifiés et passionnés, dédiés à vous fournir des solutions électriques de qualité supérieure. Avec des années d'expérience dans le domaine, nous garantissons des installations sûres, durables et conformes aux normes.</p>
+                    <ul class="about-features">
+                        <li>Techniciens certifiés et expérimentés</li>
+                        <li>Intervention rapide sous 24h</li>
+                        <li>Devis gratuits et transparents</li>
+                        <li>Garantie sur tous nos travaux</li>
+                        <li>Matériel de qualité professionnelle</li>
+                        <li>Service client disponible 7j/7</li>
+                    </ul>
+                </div>
+                <div class="about-image">
+                    ⚡
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <h2>Contactez-<span>nous</span></h2>
+            <p>Besoin d'un électricien professionnel ? Nous sommes là pour vous !</p>
+            <a href="#" class="cta-button">Demander un devis</a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <span>📞</span>
+                    <strong>Téléphone</strong>
+                    <p>+221 78 535 37 43</p>
+                </div>
+                <div class="contact-item">
+                    <span>📧</span>
+                    <strong>Email</strong>
+                    <p>electricienfallou@gmail.com</p>
+                </div>
+                <div class="contact-item">
+                    <span>📍</span>
+                    <strong>Adresse</strong>
+                    <p>Guediawaye,Dakar, Sénégal</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 <span>SamaKouran</span> - Tous droits réservés | Votre énergie, notre métier</p>
+    </footer>
+</body>
+</html>
